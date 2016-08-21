@@ -28,7 +28,7 @@ def hdfs_orc_parser():
         numElements2Compare = 10   # choose number of elements per column to compare.  Save test time.
 
         hdfs_orc_file = "/datasets/orc_parser/orc/prostate_NA.orc"
-        hdfs_csv_file = "/datasets/orc_parser/csv/protstate_NA.csv"
+        hdfs_csv_file = "/datasets/orc_parser/csv/prostate_NA.csv"
         url_orc = "hdfs://{0}{1}".format(hdfs_name_node, hdfs_orc_file)
         url_csv = "hdfs://{0}{1}".format(hdfs_name_node, hdfs_csv_file)
 
