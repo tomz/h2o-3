@@ -4,6 +4,12 @@ standard_library.install_aliases()
 from builtins import range
 from past.builtins import basestring
 import sys, os
+
+try:        # works with python 2.7 not 3
+    from StringIO import StringIO
+except:     # works with python 3
+    from io import StringIO
+
 sys.path.insert(1, "../../")
 import h2o
 import imp
