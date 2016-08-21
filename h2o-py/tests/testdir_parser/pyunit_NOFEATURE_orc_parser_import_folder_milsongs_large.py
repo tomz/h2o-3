@@ -13,11 +13,6 @@ def import_folder():
     to make sure they are equal.
     :return: None if passed.  Otherwise, an exception will be thrown.
     """
-
-    tol_time = 200              # comparing in ms or ns
-    tol_numeric = 1e-5          # tolerance for comparing other numeric fields
-    numElements2Compare = 10   # choose number of elements per column to compare.  Save test time.
-
     multi_file_csv = h2o.import_file(path=pyunit_utils.locate("bigdata/laptop/parser/orc/milsongs_orc_csv"))
     multi_file_orc = h2o.import_file(path=pyunit_utils.locate("bigdata/laptop/parser/orc/milsongs_orc"))
 

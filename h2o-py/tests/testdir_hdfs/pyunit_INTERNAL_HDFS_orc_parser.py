@@ -4,7 +4,8 @@ sys.path.insert(1,"../../")
 import h2o
 from tests import pyunit_utils
 #----------------------------------------------------------------------
-# Purpose:  This test will test orc-parser in HDFS.
+# Purpose:  This test will test orc-parser in HDFS parsing multiple
+#           orc files collected by Tom K.
 #----------------------------------------------------------------------
 
 
@@ -20,20 +21,35 @@ def hdfs_orc_parser():
         tol_numeric = 1e-5
 
         hdfs_name_node = pyunit_utils.hadoop_namenode()
-        hdfs_orc_file = "/datasets/orc_parser/prostate_NA.orc"
-        hdfs_csv_file = "/datasets/orc_parser/prostate_NA.csv"
 
-        print("Importing prostate_NA.orc from HDFS")
-        url_orc = "hdfs://{0}{1}".format(hdfs_name_node, hdfs_orc_file)
-        orc_h2o = h2o.import_file(url_orc)
+        allOrcFiles = ["/datasets/orc_parser/orc/TestOrcFile.columnProjection.orc",
+                       "/datasets/orc_parser/orc/bigint_single_col.orc",
+                       "/datasets/orc_parser/orc/TestOrcFile.emptyFile.orc",
+                       "/datasets/orc_parser/orc/bool_single_col.orc",
+                       "/datasets/orc_parser/orc/demo-11-zlib.orc",
+                       "/datasets/orc_parser/orc/TestOrcFile.testDate1900.orc",
+                       "/datasets/orc_parser/orc/demo-12-zlib.orc",
+                       "/datasets/orc_parser/orc/TestOrcFile.testDate2038.orc",
+                       "/datasets/orc_parser/orc/double_single_col.orc",
+                       "/datasets/orc_parser/orc/TestOrcFile.testMemoryManagementV11.orc",
+                       "/datasets/orc_parser/orc/float_single_col.orc",
+                       "/datasets/orc_parser/orc/TestOrcFile.testMemoryManagementV12.orc",
+                       "/datasets/orc_parser/orc/int_single_col.orc",
+                       "/datasets/orc_parser/orc/TestOrcFile.testPredicatePushdown.orc",
+                       "/datasets/orc_parser/orc/nulls-at-end-snappy.orc",
+                       "/datasets/orc_parser/orc/TestOrcFile.testSnappy.orc",
+                       "/datasets/orc_parser/orc/orc_split_elim.orc",
+                       "/datasets/orc_parser/orc/TestOrcFile.testStringAndBinaryStatistics.orc",
+                       "/datasets/orc_parser/orc/TestOrcFile.testStripeLevelStats.orc",
+                       "/datasets/orc_parser/orc/smallint_single_col.orc",
+                       "/datasets/orc_parser/orc/string_single_col.orc",
+                       "/datasets/orc_parser/orc/tinyint_single_col.orc",
+                       "/datasets/orc_parser/orc/TestOrcFile.testWithoutIndex.orc"]
 
-        print("Importing prostate_NA.csv from HDFS")
-        url_csv = "hdfs://{0}{1}".format(hdfs_name_node, hdfs_csv_file)
-        csv_h2o = h2o.import_file(url_csv)
 
-        # compare the two frames and make sure they are the same
-        assert pyunit_utils.compare_frames(orc_h2o, csv_h2o, numElements2Compare, tol_time, tol_numeric), \
-            "H2O frame parsed from orc and csv files are different!"
+        for fIndex in range(len(allOrcFiles)):
+            url_orc = "hdfs://{0}{1}".format(hdfs_name_node, allOrcFiles[fIndex])
+            tab_test = h2o.import_file(url_orc)
     else:
         raise EnvironmentError
 
